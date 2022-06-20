@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>LENOVO SMARTER WORLD 2022</title>
+</head>
+<body onload="cargaResultados()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
+    <p class="titulo">LENOVO SMARTER WORLD 2022</p>
+    <p class="texto">Registro exitoso, te espareramos el próximo 7 de Julio 2022.<br> Presenta este código QR en el modulo de impresión de gafetes para entregarte tu versión impresa. </p>
+    <img src="" alt="" srcset="" id="qr" class="qr">
+    <p class="texto">Si gusta puede sacar un screenshot de esta pantalla, adicionalmente le hemos enviado un correo electrónico con esta imgen QR, favor de revisar bandeja de no deseados o SPAM por favor. </p>
+    <button class="boton" onclick="vamosMicrositio()">Micrositio</button>
+<script>
+    let idQr = ""
+    async function cargaResultados(){
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                idQr = urlParams.get('idQr') 
+                let urlImagenQr = 'https://mosaico.app:4000/' + 'file?path=qrcodes/' + idQr + ".png"
+                let imagen = document.getElementById("qr")
+                imagen.src = urlImagenQr
+    }
+
+    function vamosMicrositio(){
+        window.location.href = 'perfilUsuario.html?idQR=' + idQr;
+    }
+
+</script>
+</body>
+</html>

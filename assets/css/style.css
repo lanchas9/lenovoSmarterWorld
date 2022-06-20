@@ -1,0 +1,78 @@
+.logo{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
+.titulo{
+	font-weight: bolder;
+	text-align: center;
+	color: red;
+}
+
+.texto{
+	margin-left: 10%;
+	margin-right: 10%;
+	font-size: medium;
+	text-align: center;
+	color: dodgerblue;
+}
+
+.boton{
+	background-color: red;
+	color: white;
+	font-size: larger;
+	text-align: center;
+	width: 40%;
+	margin-left: 30%;
+	margin-right: 30%;
+	border-radius: 5%;
+	border-color: transparent;
+	box-shadow: 1px 1px 1px 1px #888888;
+	margin-bottom: 10%;
+}
+
+.elmentoFormulario{
+	text-align: center;
+}
+
+.elmentoFormularioTitulo{
+	margin-left: 10%;
+	margin-right: 10%;
+	font-size: larger;
+	text-align: center;
+	color: dodgerblue;
+	margin-bottom: 0px;
+}
+
+.elmentoFormularioinput{
+	font-size: 16px;
+	font-size: max(16px, 1em);
+	font-family: inherit;
+	padding: 0.25em 0.5em;
+	background-color: rgb(168, 70, 70);
+	border: 2px solid var(--input-border);
+	border-radius: 4px;
+	color: white;
+  }
+
+  .espaciador{
+	margin-top: 10%;  
+	margin-bottom: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
+  }
+
+  .qr{
+	  width: 60%;
+	  margin-left: 20%;
+	  margin-right: 20%;
+	  margin-top: 0%;
+	  margin-bottom: 0%;
+  }
+
+  li{
+	list-style-type:none
+  }

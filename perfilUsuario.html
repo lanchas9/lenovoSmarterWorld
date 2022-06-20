@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>LENOVO SMARTER WORLD 2022</title>
+    <script src="/assets/js/cookie.js"></script>
+</head>
+<body onload="cargaResultados()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
+    <p class="titulo" onclick="borraCookie()">LENOVO SMARTER WORLD 2022</p>
+    <p class="texto" id="bienvenida">Bienvenid@ USUARIO</p>
+    <p class="texto">Aqui está el detalle de las Vcards intercambiadas durante el evento LENOVO SMARTER WORLD 2022</p>
+    <div id="lista"></div>
+    <div id="detalle"></div>
+    <script>
+        let urlServer = "https://mosaico.app:4000/lenovo/"
+        let idQR = ''
+        let estadosPagina = { 
+            primeraVez: "primeraVez",
+            tenemosCookieQRigual: "tenemosCookieQRigual",
+            tenemosCookieQRdiferente: "tenemosCookieQRdiferente",
+        }
+        let datosRelaciones
+        
+        function borraCookie(){
+            setCookie("idQR", "", 100)
+            alert("En cookie hay: " + getCookie("idQR"))
+        }
+        async function cargaResultados(){
+                listaOdetalle(true);
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let idQR = urlParams.get('idQR') 
+                let estado = ""
+                let existeIdPrevio = getCookie("idQR")
+                //Existen 3 estados:
+                // No hay Cookie, osea PrimeraVez
+                // Si hay Cookie, y idQR es el mismo
+                // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
+                if (existeIdPrevio == ''){
+                    estado = estadosPagina.primeraVez
+                }else if (existeIdPrevio == idQR){
+                    estado = estadosPagina.tenemosCookieQRigual
+                }else{
+                    estado = estadosPagina.tenemosCookieQRdiferente
+                }
+                switch (estado) {
+                    case estadosPagina.primeraVez:
+                        setCookie("idQR", idQR, 100)
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRigual:
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRdiferente:
+                        guardamosRelacion(existeIdPrevio,idQR)
+                    break;
+                
+                    default:
+                    break;
+                }
+            }
+
+           async function vamosPorDatos(idQR){
+                    let datosUsuario
+                    try{ 
+                            let datos = await fetch(urlServer + "dameDatosPorIdQR?idQR=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario[0]
+                                    datosRelaciones = temp.Relaciones == undefined ? [] :  temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML = "Bienvenid@ " + "<b>" + datosUsuario.nombreCompleto + "<b>"
+
+                    let listaContactos = document.createElement("ul")
+                    
+                    if(datosRelaciones.length == 0){
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = "No tenemos datos todavía"
+                        listaContactos.appendChild(renglon)
+                    }
+                    datosRelaciones.forEach(element => {
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = element.nombreCompleto
+                        // renglon.onclick = verDetalle(element);
+                        renglon.addEventListener('click', verDetalleBind.bind(this,element, idQR))
+
+                        listaContactos.appendChild(renglon)
+                    });
+                    let padreLista = document.getElementById("lista")
+                    padreLista.innerHTML = ""
+                    padreLista.appendChild(listaContactos)
+            }
+
+            function verDetalleBind(element, idQR, event){
+                verDetalle(element, idQR)
+            }
+
+            async function guardamosRelacion(existeIdPrevio, idQR){
+                let datosUsuario
+                    let datosRelaciones
+                    try{ 
+                            let datos = await fetch(urlServer + "guardaRelacion?idQR1=" + existeIdPrevio + "&idQR2=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario
+                                    datosRelaciones = temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML = "Bienvenid@ " + "<b>" + datosUsuario.nombreCompleto + "<b>"
+
+                    verDetalle(datosRelaciones, getCookie("idQR"))
+            }
+
+            function verDetalle(element,idQR){
+                listaOdetalle(false)
+                let detalle = document.getElementById("detalle")
+                detalle.innerHTML = ""
+                let listaContactos = document.createElement("ul")
+                let nombreCompleto = document.createElement("li");
+                nombreCompleto.innerHTML = element.nombreCompleto
+                listaContactos.appendChild(nombreCompleto)
+
+                let empresa = document.createElement("li");
+                empresa.innerHTML = element.nombreEmpresa
+                listaContactos.appendChild(empresa)
+
+                let telefono = document.createElement("li");
+                telefono.innerHTML = element.numeroCelular
+                listaContactos.appendChild(telefono)
+                
+                let correoElectronico = document.createElement("li");
+                correoElectronico.innerHTML = element.correoElectronico
+                listaContactos.appendChild(correoElectronico)
+
+                let paginaWeb = document.createElement("li");
+                paginaWeb.innerHTML = element.paginaWeb
+                listaContactos.appendChild(paginaWeb)
+
+                detalle.appendChild(listaContactos);
+
+                let regresar = document.createElement("button")
+                regresar.innerHTML = "Regresar"
+                regresar.className = "boton"
+                regresar.onclick = function(){
+                    listaOdetalle(true)
+                    vamosPorDatos(idQR)
+                }
+                detalle.appendChild(regresar)
+            }
+
+            function listaOdetalle(val){
+                let lista = document.getElementById("lista")
+                let detalle = document.getElementById("detalle")
+                if (val){
+                    lista.style.display = "block";
+                    detalle.style.display = "none";    
+                }else{
+                    lista.style.display = "none";
+                    detalle.style.display = "block";   
+                }
+            }
+</script>
+</body>
+</html>
