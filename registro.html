@@ -10,11 +10,16 @@
     <title>LENOVO SMARTER WORLD 2022</title>
 </head>
 <body onload="cargaDatos()">
-    <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
-    <p class="titulo">Datos necesarios para el registro</p>
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logoInstrucciones">
+    <!-- <p class="titulo">Datos necesarios para el registro</p> -->
     <div id="registro"></div>
     <div class="espaciador titulo" id="mensajeError"></div>
-    <button class="boton" onclick="guardaDatos()">Guardar</button>
+    <button class="boton botonChico" onclick="guardaDatos()">GENERAR MI SMART CARD</button>
+    <div>
+        <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo">
+    </div>
     <script type="text/javascript">
     let urlServer = "https://mosaico.app:4000/lenovo/"
     let tipoValidaciones = { 
@@ -82,7 +87,7 @@
         if (!hayErrror){
             let resul = await guardaEnServer(datosRegistro);
             if (resul.error == false){
-                window.location.href = "registroExitoso.html?idQr=" + resul.idQr
+                window.location.href = "tomaFoto.html?idQr=" + resul.idQr
             }else{
                 document.getElementById("mensajeError").innerHTML = resul.message
             }

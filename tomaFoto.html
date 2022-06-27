@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>LENOVO SMARTER WORLD 2022</title>
+</head>
+<body onload="cargaResultados()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logoInstrucciones">
+    <!-- <p class="titulo">LENOVO SMARTER WORLD 2022</p>
+    <p class="texto">Bienvenido al registro del congreso del próximo 7 de Julio 2022</p> -->
+    <video autoplay id="video" class="camaraSelfie"></video>
+    <canvas id="canvas" class="camaraSelfie oculto"></canvas>
+    <div>
+        <button class="boton" onclick="tomaFoto()" id="botonTomaFoto">TOMAR SELFIE</button>
+        <button class="boton botonChico" onclick="buscarGaleria()" id="botonBuscarGaleria">BUSCAR EN GALERÍA</button>
+    </div>
+    <div>
+        <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo">
+    </div>
+    <script>
+         let idQR = ""
+         let modoBoton = 'paso1'
+    
+         async function cargaResultados(){
+            if(idQR == ""){
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                idQR = urlParams.get('idQr') 
+            }
+            
+            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia({video: true})
+             
+            let constraints
+            if(window.location.hostname == "localhost"){
+                constraints= {
+                video: {
+                    width: {
+                        min: 380,
+                        ideal: 400,
+                        max: 420,
+                    },
+                    height: {
+                        min: 380,
+                        ideal: 400,
+                        max: 420,
+                    },
+                    facingMode: 'user'
+                    },
+                }
+            }else if(window.innerHeight > window.innerWidth){
+                constraints = {
+                video: {
+                    width: {
+                        min: 1280,
+                        ideal: 1920,
+                        max: 2560,
+                    },
+                    height: {
+                        min: 720,
+                        ideal: 1080,
+                        max: 1440,
+                    },
+                    facingMode: 'user'
+                 },
+                }
+            }else{
+                constraints = {
+                video: {
+                    width: {
+                        min: 600,
+                        ideal: 700,
+                        max: 800,
+                    },
+                    height: {
+                        min: 800,
+                        ideal: 900,
+                        max: 1000,
+                    },
+                    facingMode: 'user'
+                },
+            }
+            }
+            
+            try{
+                const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
+                const video = document.querySelector('#video')
+                video.srcObject = videoStream
+            }catch(error){
+                console.error("Error : " + error)
+            }
+        }
+    }
+
+    async function tomaFoto(){
+        if(modoBoton == 'paso1'){
+            const canvas = document.querySelector('#canvas')
+            const video = document.querySelector('#video')
+            canvas.width = video.videoWidth
+            canvas.height = video.videoHeight
+            canvas.getContext('2d').drawImage(video, 0, 0)
+            canvas.className  ="camaraSelfie visible"
+            constraints= {
+                    video: {
+                        width: {
+                            min: 380,
+                            ideal: 400,
+                            max: 420,
+                        },
+                        height: {
+                            min: 380,
+                            ideal: 400,
+                            max: 420,
+                        },
+                        facingMode: 'user'
+                        },
+                    }
+                const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
+                videoStream.getTracks().forEach((track) => {
+                    track.stop()
+                })
+                video.className = "camaraSelfie oculto"
+                let btn1 = document.getElementById("botonTomaFoto")
+                btn1.innerHTML = "Repetir Foto"
+                let btn2 = document.getElementById("botonBuscarGaleria")
+                btn2.innerHTML = "Guardar Foto"
+                btn2.className = "boton"
+                modoBoton = 'paso2'
+        }else{
+            const canvas = document.querySelector('#canvas')
+            const video = document.querySelector('#video')
+            canvas.className = "camaraSelfie oculto"
+            video.className = "camaraSelfie visible"
+            cargaResultados()
+            modoBoton = 'paso1'
+        }
+        
+    }
+
+    async function buscarGaleria(){
+        if(modoBoton == 'paso1'){
+            modoBoton = 'paso2'
+        }else{
+            modoBoton = 'paso1'
+            // console.log("Hacemos upLoad de foto y vamos a registro Exitoso ")
+            const canvas = document.querySelector('#canvas')
+            let img = await canvas.toBlob(function(blob){
+                //////////////
+                const formData = new FormData();
+                let resul = {
+                    error : true,
+                    message: "",
+                    statusCode: 0
+                }
+                formData.append('avatar', blob, 'avatar.jpg');
+
+                const options = {
+                    method: 'POST',
+                    body: formData
+                };
+
+                fetch(`https://mosaico.app:4000/lenovo/uploadProfilePicture?idQR=`+idQR, options).then(r => r.json()).then(data => {
+                        //Your logic, in my case I get JSON from server
+                        if(data.statusCode == 200){
+                                resul.error = false
+                                resul.statusCode = data.statusCode
+                                resul.message = data.message
+                                window.location.href = "registroExitoso.html?idQR=" + resul.idQr
+                         }else{                        
+                            resul.statusCode = data.statusCode
+                            resul.message = data.message
+                            }
+                });
+            },'image/jpeg', 0.95)            
+        }
+    }
+    </script>
+</body>
+</html>

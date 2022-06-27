@@ -8,7 +8,7 @@
             "name": "Launch welcome",
             "type": "chrome",
             "request": "launch",
-            "url": "http://192.168.0.18:5500/index.html",
+            "url": "http://localhost:5500/tomaFoto.html",
             "webRoot": "${workspaceFolder}/"
         }
     ]

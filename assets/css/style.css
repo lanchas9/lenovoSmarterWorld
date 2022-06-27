@@ -1,4 +1,55 @@
+html{
+	background: rgb(51,31,94);
+	background: linear-gradient(270deg, rgba(51,31,94,1) 0%, rgba(93,36,42,1) 50%, rgba(79,32,38,1) 100%);
+   
+}
+
+body{
+	height: 100%;
+    margin: 0;
+	 background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 .logo{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 20%;
+	margin-bottom: 20%;
+}
+
+.logoInstrucciones{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+}
+
+.final{
+	position: absolute;
+	top: 90%;
+	height: 10%;
+	width: 100%;
+	background: rgb(51,31,94);
+	background: linear-gradient(270deg, rgba(51,31,94,1) 0%, rgba(93,36,42,1) 50%, rgba(79,32,38,1) 100%);
+}
+
+.iconoLogo{
+	width: 20%;
+	margin-left: 10%;
+	margin-right: 0%;
+}
+
+.iconoLogo2{
+	width: 20%;
+	margin-left: 10%;
+	margin-right: 0%;
+	padding-top: 0px;
+	margin-top: 0px;
+	border-top: 0px;
+}
+
+.camaraSelfie{
 	width: 80%;
 	margin-left: 10%;
 	margin-right: 10%;
@@ -6,56 +57,103 @@
 	margin-bottom: 10%;
 }
 
+.oculto{
+	display: none;
+}
+
+.visible{
+	display: block;
+}
+
 .titulo{
 	font-weight: bolder;
 	text-align: center;
-	color: red;
+	color: #FF6A50
 }
 
 .texto{
-	margin-left: 10%;
-	margin-right: 10%;
-	font-size: medium;
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: large;
+	font-weight: 600;
 	text-align: center;
-	color: dodgerblue;
+	color: white;
+}
+
+.textoExplicacion{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: center;
+	color: white;
+	margin-bottom: 0%;
+}
+
+.textoExplicacion2{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: large;
+	font-weight: 400;
+	text-align: center;
+	color: white;
+	margin-bottom: 0%;
 }
 
 .boton{
-	background-color: red;
+	background-color: #FF6A50;
 	color: white;
 	font-size: larger;
 	text-align: center;
-	width: 40%;
-	margin-left: 30%;
-	margin-right: 30%;
-	border-radius: 5%;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 3%;
 	border-color: transparent;
-	box-shadow: 1px 1px 1px 1px #888888;
-	margin-bottom: 10%;
+	/* box-shadow: 1px 1px 1px 1px #888888; */
+	margin-bottom: 20%;
+	display: block;
+	margin-top: 20%;
+	height: 50px;
+	max-height: 50px;
 }
 
-.elmentoFormulario{
-	text-align: center;
+.botonChico{
+	font-size: large;
+	margin-top: 10%;
+	margin-bottom: 5%;
 }
+
+/* .elmentoFormulario{
+	text-align: left;
+} */
 
 .elmentoFormularioTitulo{
-	margin-left: 10%;
-	margin-right: 10%;
-	font-size: larger;
-	text-align: center;
-	color: dodgerblue;
+	margin-left: 15%;
+	/* margin-right: 10%; */
+	font-size: medium;
+	font-weight: 500;
+	/* text-align: center; */
+	color: white;
 	margin-bottom: 0px;
 }
 
 .elmentoFormularioinput{
-	font-size: 16px;
-	font-size: max(16px, 1em);
+	font-size: medium;
+	/* font-size: max(16px, 1em); */
 	font-family: inherit;
 	padding: 0.25em 0.5em;
-	background-color: rgb(168, 70, 70);
-	border: 2px solid var(--input-border);
+	/* background-color: rgb(168, 70, 70); */
+	
+	border: 1px solid var(--input-border);
 	border-radius: 4px;
+	border-color: #FF6A50;
 	color: white;
+	margin-left: 15%;
+	width: 70%;
+	background: transparent;
+	box-shadow:inset 0 0 1px 1px #FF6A50
+  	/* background: #fff; */
   }
 
   .espaciador{
@@ -66,13 +164,17 @@
   }
 
   .qr{
-	  width: 60%;
-	  margin-left: 20%;
-	  margin-right: 20%;
-	  margin-top: 0%;
+	  width: 40%;
+	  margin-left: 30%;
+	  margin-right: 30%;
+	  margin-top: 5%;
 	  margin-bottom: 0%;
   }
 
   li{
 	list-style-type:none
+  }
+
+  .naranja{
+	color: #FF6A50;
   }
