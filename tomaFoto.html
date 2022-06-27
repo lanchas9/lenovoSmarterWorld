@@ -32,7 +32,11 @@
             if(idQR == ""){
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);
-                idQR = urlParams.get('idQr') 
+                if(urlParams.get('idQr') == null){
+                    idQR = urlParams.get('idQR')
+                }else{
+                    idQR = urlParams.get('idQr')
+                }
             }
             
             if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
@@ -43,14 +47,14 @@
                 constraints= {
                 video: {
                     width: {
-                        min: 380,
-                        ideal: 400,
-                        max: 420,
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
                     },
                     height: {
-                        min: 380,
-                        ideal: 400,
-                        max: 420,
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
                     },
                     facingMode: 'user'
                     },
@@ -59,14 +63,14 @@
                 constraints = {
                 video: {
                     width: {
-                        min: 1280,
-                        ideal: 1920,
-                        max: 2560,
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
                     },
                     height: {
-                        min: 720,
-                        ideal: 1080,
-                        max: 1440,
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
                     },
                     facingMode: 'user'
                  },
@@ -75,14 +79,14 @@
                 constraints = {
                 video: {
                     width: {
-                        min: 600,
-                        ideal: 700,
-                        max: 800,
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
                     },
                     height: {
-                        min: 800,
-                        ideal: 900,
-                        max: 1000,
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
                     },
                     facingMode: 'user'
                 },
