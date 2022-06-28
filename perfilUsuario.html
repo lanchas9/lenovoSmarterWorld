@@ -7,16 +7,39 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/styleInicio.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon//apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon//apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon//apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon//apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon//apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon//apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon//apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/favicon//android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon//favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon//favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon//manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon//ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <title>LENOVO SMARTER WORLD 2022</title>
     <script src="/assets/js/cookie.js"></script>
 </head>
 <body onload="cargaResultados()">
     <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
-    <p class="titulo" onclick="borraCookie()">LENOVO SMARTER WORLD 2022</p>
-    <p class="texto" id="bienvenida">Bienvenid@ USUARIO</p>
-    <p class="texto">Aqui está el detalle de las Vcards intercambiadas durante el evento LENOVO SMARTER WORLD 2022</p>
+    <!-- <p class="titulo" onclick="borraCookie()">LENOVO SMARTER WORLD 2022</p> -->
+    <p class="texto">Bienvenid@ <i id="bienvenida">USUARIO</i> este es tu directorio digital de Smart Cards</p>
     <div id="lista"></div>
     <div id="detalle"></div>
+    <div class="espaciador"><br></div>
+    <div class="espaciador">
+        <img src="assets/img/logos.png" alt="" class="iconoLogos">
+        <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo"> -->
+    </div>
     <script>
         let urlServer = "https://mosaico.app:4000/lenovo/"
         let idQR = ''
@@ -81,13 +104,14 @@
                         console.log({error})
                     }
                     let bienvenida = document.getElementById("bienvenida")
-                    bienvenida.innerHTML = "Bienvenid@ " + "<b>" + datosUsuario.nombreCompleto + "<b>"
+                    bienvenida.innerHTML = "<b>" + datosUsuario.nombreCompleto + "</b>"
 
                     let listaContactos = document.createElement("ul")
                     
                     if(datosRelaciones.length == 0){
                         let renglon = document.createElement("li")
                         renglon.innerHTML = "No tenemos datos todavía"
+                        renglon.className = "textoExplicacion"
                         listaContactos.appendChild(renglon)
                     }
                     datosRelaciones.forEach(element => {
@@ -123,7 +147,7 @@
                         console.log({error})
                     }
                     let bienvenida = document.getElementById("bienvenida")
-                    bienvenida.innerHTML = "Bienvenid@ " + "<b>" + datosUsuario.nombreCompleto + "<b>"
+                    bienvenida.innerHTML =  "<b>" + datosUsuario.nombreCompleto + "<b>"
 
                     verDetalle(datosRelaciones, getCookie("idQR"))
             }

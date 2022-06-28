@@ -40,6 +40,12 @@ body{
 	margin-right: 0%;
 }
 
+.iconoLogos{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
 .iconoLogo2{
 	width: 20%;
 	margin-left: 10%;
@@ -159,8 +165,6 @@ body{
   .espaciador{
 	margin-top: 10%;  
 	margin-bottom: 10%;
-	margin-left: 10%;
-	margin-right: 10%;
   }
 
   .qr{
