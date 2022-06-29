@@ -31,7 +31,7 @@
     <!-- <p class="titulo">Datos necesarios para el registro</p> -->
     <div id="registro"></div>
     <div class="espaciador titulo" id="mensajeError"></div>
-    <button class="boton botonChico" onclick="guardaDatos()">GENERAR MI SMART CARD</button>
+    <button class="boton botonChico2" onclick="guardaDatos()">GENERAR MI SMART CARD</button>
     <div class="espaciador">
         <img src="assets/img/logos.png" alt="" class="iconoLogos">
         <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
@@ -78,7 +78,10 @@
         let input = document.createElement("input");
         input.setAttribute("class", "elmentoFormularioinput");
         input.setAttribute("id", `elementoFormulario${element.idEstructuraPreguntas}`);
-
+        if(element.tipoValidacionEstructuraPreguntas == 4){
+            input.setAttribute("type","number")
+        }
+        
         formulario.appendChild(divPadre)
         divPadre.appendChild(titulo)
         divPadre.appendChild(input)

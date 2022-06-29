@@ -86,12 +86,16 @@ body{
 	color: white;
 }
 
+.textoIzquierda{
+	text-align: left;
+}
+
 .textoExplicacion{
 	margin-left: 15%;
 	margin-right: 15%;
 	font-size: medium;
 	font-weight: 400;
-	text-align: center;
+	text-align: left;
 	color: white;
 	margin-bottom: 0%;
 }
@@ -106,10 +110,21 @@ body{
 	margin-bottom: 0%;
 }
 
+.textoExplicacion3Izq{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white	;
+	margin-bottom: 0%;
+}
+
 .boton{
 	background-color: #FF6A50;
 	color: white;
 	font-size: larger;
+	font-weight: 600;
 	text-align: center;
 	width: 60%;
 	margin-left: auto;
@@ -130,6 +145,11 @@ body{
 	margin-bottom: 5%;
 }
 
+.botonChico2{
+	font-size: small;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}
 /* .elmentoFormulario{
 	text-align: left;
 } */
@@ -165,6 +185,14 @@ body{
   .espaciador{
 	margin-top: 10%;  
 	margin-bottom: 10%;
+  }
+
+  .espaciador{
+	font-size: medium;
+	margin-top: 10%;  
+	margin-bottom: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
   }
 
   .qr{
