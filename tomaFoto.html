@@ -46,6 +46,7 @@
     <script>
          let idQR = ""
          let modoBoton = 'paso1'
+         let camaraAbierta = false;
 
          async function setup(){
             if(idQR == ""){
@@ -60,7 +61,9 @@
             }
         }
     
-         async function abreCamara(){
+    async function abreCamara(){
+        if(!camaraAbierta){
+            camaraAbierta = true;
             let constraints
             if(window.location.hostname == "localhost"){
                 constraints= {
@@ -149,12 +152,17 @@
             }catch(error){
                 alert("Error mensaje: " + error);
             }
+        }else{
+            tomaFoto()
+        }
     }
 
     
     function showCam(stream) {
         let video = document.querySelector("#video");
         video.srcObject = stream;
+        let btn1 = document.getElementById("botonTomaFoto")
+        btn1.innerHTML = "TOMAR SELFIE"
     }
 
     function showErr(err) {
@@ -186,10 +194,10 @@
                         facingMode: 'user'
                         },
                     }
-                const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
-                videoStream.getTracks().forEach((track) => {
-                    track.stop()
-                })
+                // const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
+                // videoStream.getTracks().forEach((track) => {
+                //     track.stop()
+                // })
                 video.className = "camaraSelfie oculto"
                 let btn1 = document.getElementById("botonTomaFoto")
                 btn1.innerHTML = "REPETIR FOTO"
@@ -203,13 +211,12 @@
             const video = document.querySelector('#video')
             canvas.className = "camaraSelfie oculto"
             video.className = "camaraSelfie visible"
-            cargaResultados()
+            //cargaResultados()
             modoBoton = 'paso1'
             let btn2 = document.getElementById("botonBuscarGaleria")
             btn2.style.display = "none"
             let btn1 = document.getElementById("botonTomaFoto")
             btn1.innerHTML = "TOMAR SELFIE"
-                
         }
         
     }
