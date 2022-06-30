@@ -26,7 +26,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>LENOVO SMARTER WORLD 2022</title>
 </head>
-<body onload="cargaResultados()">
+<body onload="setup()">
     <img src="/assets/img/logo.png" alt="" srcset="" class="logoRegistro">
     <img src="/assets/img/Imagen_desktop.png" alt="" srcset="" class="logoDesktopRegistro">
     <!-- <p class="titulo">LENOVO SMARTER WORLD 2022</p>
@@ -34,7 +34,7 @@
     <video autoplay id="video" class="camaraSelfie"></video>
     <canvas id="canvas" class="camaraSelfie oculto"></canvas>
     <div>
-        <button class="boton botonChico2" onclick="tomaFoto()" id="botonTomaFoto">TOMAR SELFIE</button>
+        <button class="boton botonChico2" onclick="abreCamara()" id="botonTomaFoto">ABRIR CAMARA</button>
         <button class="boton botonChico2" onclick="buscarGaleria()" id="botonBuscarGaleria">BUSCAR EN GALERÍA</button>
     </div>
     <div class="espaciador2">
@@ -46,8 +46,8 @@
     <script>
          let idQR = ""
          let modoBoton = 'paso1'
-    
-         async function cargaResultados(){
+
+         async function setup(){
             if(idQR == ""){
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);
@@ -58,7 +58,9 @@
                 }
                 document.getElementById("botonBuscarGaleria").style.display = "none"
             }
-
+        }
+    
+         async function abreCamara(){
             let constraints
             if(window.location.hostname == "localhost"){
                 constraints= {
@@ -74,6 +76,7 @@
                         max: 640,
                     },
                     facingMode: 'user'
+                    , video: true
                     },
                 }
             }else if(window.innerHeight > window.innerWidth){
@@ -90,6 +93,7 @@
                         max: 640,
                     },
                     facingMode: 'user'
+                    , video: true
                  },
                 }
             }else{
@@ -106,6 +110,7 @@
                         max: 640,
                     },
                     facingMode: 'user'
+                    , video: true
                 },
             }
             }
