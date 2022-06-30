@@ -58,10 +58,7 @@
                 }
                 document.getElementById("botonBuscarGaleria").style.display = "none"
             }
-            
-            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-            navigator.mediaDevices.getUserMedia({video: true})
-             
+
             let constraints
             if(window.location.hostname == "localhost"){
                 constraints= {
@@ -112,6 +109,11 @@
                 },
             }
             }
+
+            //TOMA DE FOTOGRAFÍA VERSION 1 DECAPRITADED
+            /*
+            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            navigator.mediaDevices.getUserMedia({video: true})
             
             try{
                 const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
@@ -121,6 +123,39 @@
                 console.error("Error : " + error)
             }
         }
+        */
+        //fin
+        // alert("Objeto : " + navigator.mediaDevices)
+        try{
+        if (!navigator.mediaDevices && !navigator.mediaDevices.getUserMedia) {
+             navigator.userMedia = navigator.mozGetUserMedia || navigator.getUserMedia
+            if (!navigator.userMedia) {
+                alert("Please Update or Use Different Browser");
+            return
+            }
+            navigator.userMedia(constraints, (stream) => showCam(stream), (err) => showErr(err))
+            return
+        }
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => showCam(stream))
+                .catch((err) => showErr(err))
+
+            }catch(error){
+                alert("Error mensaje: " + error);
+            }
+    }
+
+    
+    function showCam(stream) {
+        let video = document.querySelector("#video");
+        video.srcObject = stream;
+    }
+
+    function showErr(err) {
+        let message = err.name === "NotFoundError" ? "Please Attach Camera" :
+        err.name === "NotAllowedError" ? "Please Grant Permission to Access Camera" : err
+        alert(message)
     }
 
     async function tomaFoto(){
