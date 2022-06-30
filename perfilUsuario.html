@@ -118,6 +118,7 @@
                     datosRelaciones.forEach(element => {
                         let renglon = document.createElement("li")
                         renglon.innerHTML = element.nombreCompleto
+                        renglon.className = "textoExplicacion"
                         // renglon.onclick = verDetalle(element);
                         renglon.addEventListener('click', verDetalleBind.bind(this,element, idQR))
 
@@ -160,23 +161,31 @@
                 let listaContactos = document.createElement("ul")
                 let nombreCompleto = document.createElement("li");
                 nombreCompleto.innerHTML = element.nombreCompleto
+                nombreCompleto.className = "textoExplicacion"
                 listaContactos.appendChild(nombreCompleto)
 
                 let empresa = document.createElement("li");
                 empresa.innerHTML = element.nombreEmpresa
+                empresa.className = "textoExplicacion"
+                
                 listaContactos.appendChild(empresa)
 
                 let telefono = document.createElement("li");
                 telefono.innerHTML = element.numeroCelular
+                telefono.className = "textoExplicacion"
+                
                 listaContactos.appendChild(telefono)
                 
                 let correoElectronico = document.createElement("li");
                 correoElectronico.innerHTML = element.correoElectronico
+                correoElectronico.className = "textoExplicacion"
                 listaContactos.appendChild(correoElectronico)
+                
 
-                let paginaWeb = document.createElement("li");
-                paginaWeb.innerHTML = element.paginaWeb
-                listaContactos.appendChild(paginaWeb)
+                let cargoEmpresarial = document.createElement("li");
+                cargoEmpresarial.innerHTML = element.cargoEmpresarial
+                cargoEmpresarial.className = "textoExplicacion"
+                listaContactos.appendChild(cargoEmpresarial)
 
                 detalle.appendChild(listaContactos);
 
