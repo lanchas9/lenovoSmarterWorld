@@ -160,6 +160,7 @@
     
     function showCam(stream) {
         let video = document.querySelector("#video");
+        video.setAttribute("playsinline", true);
         video.srcObject = stream;
         let btn1 = document.getElementById("botonTomaFoto")
         btn1.innerHTML = "TOMAR SELFIE"
