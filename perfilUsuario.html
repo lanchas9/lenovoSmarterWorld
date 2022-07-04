@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/styleInicio.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/perfil.css">
     <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon//apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon//apple-icon-72x72.png">
@@ -158,33 +159,39 @@
                 listaOdetalle(false)
                 let detalle = document.getElementById("detalle")
                 detalle.innerHTML = ""
+
+                let foto = document.createElement("img")
+                foto.src = element.profilePicture
+                foto.className = "profilePicture"
+                detalle.appendChild(foto);
+                
                 let listaContactos = document.createElement("ul")
                 let nombreCompleto = document.createElement("li");
                 nombreCompleto.innerHTML = element.nombreCompleto
-                nombreCompleto.className = "textoExplicacion"
+                nombreCompleto.className = "espaciadorDos textoExplicacion"
                 listaContactos.appendChild(nombreCompleto)
 
                 let empresa = document.createElement("li");
                 empresa.innerHTML = element.nombreEmpresa
-                empresa.className = "textoExplicacion"
+                empresa.className = "espaciadorDos textoExplicacion"
                 
                 listaContactos.appendChild(empresa)
 
                 let telefono = document.createElement("li");
                 telefono.innerHTML = element.numeroCelular
-                telefono.className = "textoExplicacion"
+                telefono.className = "espaciadorDos textoExplicacion"
                 
                 listaContactos.appendChild(telefono)
                 
                 let correoElectronico = document.createElement("li");
                 correoElectronico.innerHTML = element.correoElectronico
-                correoElectronico.className = "textoExplicacion"
+                correoElectronico.className = "espaciadorDos textoExplicacion"
                 listaContactos.appendChild(correoElectronico)
                 
 
                 let cargoEmpresarial = document.createElement("li");
                 cargoEmpresarial.innerHTML = element.cargoEmpresarial
-                cargoEmpresarial.className = "textoExplicacion"
+                cargoEmpresarial.className = "espaciadorDos textoExplicacion"
                 listaContactos.appendChild(cargoEmpresarial)
 
                 detalle.appendChild(listaContactos);

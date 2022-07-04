@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon//apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon//apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon//apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon//apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon//apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon//apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon//apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/favicon//android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon//favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon//favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon//manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon//ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>LENOVO SMARTER WORLD 2022</title>
+</head>
+<body onload="llenaDatos()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
+    <p class="texto">Reporte Registros Portal</p>
+    <div class="espaciador"></div>
+    <div id="lista"></div>
+    <div class="espaciador">
+        <img src="assets/img/logos.png" alt="" class="iconoLogos">
+        <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo"> -->
+    </div>
+    <!-- <div class="final"><br></div> -->
+    <script>
+        let urlServer = "https://mosaico.app:4000/lenovo/"
+    async function llenaDatos(){
+        
+        let datosRegistros
+                    try{ 
+                            let datos = await fetch(urlServer + "dameRegistrosPorDia") 
+                            let json = await datos. json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosRegistros = temp
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+
+        let listaContactos = document.createElement("ul")
+        datosRegistros.forEach(element => {
+            let renglon = document.createElement("li")
+            let str = element.numRegistros == 1 ? " invitado registrado" : " invitados registrados"    
+            let fechaTexto = ""
+            switch (element.fechaRegistro) {
+                case "30/06/2022":
+                    fechaTexto = "Jueves 30 de Junio"
+                    break;
+                case "01/07/2022":
+                    fechaTexto = "Viernes 1 de Julio"
+                    break;
+                case "02/07/2022":
+                    fechaTexto = "Sábado 2 de Julio"
+                    break;
+                case "03/07/2022":
+                    fechaTexto = "Domingo 2 de Julio"
+                    break;
+                case "04/07/2022":
+                    fechaTexto = "Lunes 4 de Julio"
+                    break;
+                    case "05/07/2022":
+                    fechaTexto = "Martes 5 de Julio"
+                    break;
+                case "06/07/2022":
+                    fechaTexto = "Miércoles 6 de Julio"
+                    break;
+                case "07/07/2022":
+                    fechaTexto = "Jueves 7 de Julio"
+                    break;
+                default:
+                    break;
+            }
+
+            renglon.innerHTML = "<B>" + fechaTexto + "</B>  ➡  " + element.numRegistros + str + " 📄"
+            renglon.className = "textoExplicacion"
+            // renglon.onclick = verDetalle(element);
+            renglon.addEventListener('click', verDetalleBind.bind(this,element))
+            listaContactos.appendChild(renglon)
+        });
+
+        let padreLista = document.getElementById("lista")
+        padreLista.innerHTML = ""
+        padreLista.appendChild(listaContactos)
+    }
+
+   async function verDetalleBind(element){
+        let datosRegistros
+        try{ 
+                let datos = await fetch(urlServer + "dameRegistrosPorDia?diaEspecifico=" + element.fechaRegistro) 
+                let json = await datos. json()
+
+                if (json.statusCode = 200 ){ 
+                        let temp = json.message
+                        datosRegistros = temp
+                }
+        }catch(error){
+            console.log({error})
+        }
+
+        let listaContactos = document.createElement("ul")
+        datosRegistros.forEach(element => {
+            let renglon = document.createElement("li")
+            renglon.innerHTML = "<B>" + element.nombreCompleto + "</B>   ➡  " + element.nombreEmpresa 
+            renglon.className = "textoExplicacion"
+            // renglon.onclick = verDetalle(element);
+            // renglon.addEventListener('click', verDetalleBind.bind(this,element))
+            listaContactos.appendChild(renglon)
+        });
+
+        let padreLista = document.getElementById("lista")
+        padreLista.innerHTML = ""
+        padreLista.appendChild(listaContactos)
+
+        let regresar = document.createElement("button")
+                regresar.innerHTML = "Regresar"
+                regresar.className = "boton"
+                regresar.onclick = function(){
+                    llenaDatos()
+                }
+                padreLista.appendChild(regresar)
+    }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/perfil.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon//apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon//apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon//apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon//apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon//apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon//apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon//apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/favicon//android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon//favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon//favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon//manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon//ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>LENOVO SMARTER WORLD 2022</title>
+    <script src="/assets/js/cookie.js"></script>
+</head>
+<body onload="creaEventosTeclado()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo" onclick="borraCookie()">
+    <!-- <p class="titulo" onclick="borraCookie()">LENOVO SMARTER WORLD 2022</p> -->
+    <p class="textoExplicacion3Izq">Portal registro invitados</p>
+    <div class="espaciador"><br></div>
+    <div id="camaraFotos" class="oculto">
+        <video autoplay id="video" class="camaraSelfie"></video>
+        <canvas id="canvas" class="camaraSelfie oculto"></canvas>
+        <div>
+            <button class="boton botonChico2" onclick="abreCamara()" id="botonTomaFoto">ABRIR CAMARA</button>
+            <button class="boton botonChico2" onclick="buscarGaleria()" id="botonBuscarGaleria">BUSCAR EN GALERÍA</button>
+        </div>
+    </div>
+    <div id="detalle"></div>
+    <div class="espaciador"><br></div>
+    <div class="espaciador">
+        <img src="assets/img/logos.png" alt="" class="iconoLogos">
+        <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo"> -->
+    </div>
+    <script>
+        let urlServer = "https://mosaico.app:4000/lenovo/"
+        let idQRparaEditar = ''
+        let estadosPagina = { 
+            primeraVez: "primeraVez",
+            tenemosCookieQRigual: "tenemosCookieQRigual",
+            tenemosCookieQRdiferente: "tenemosCookieQRdiferente",
+        }
+        let datosRelaciones
+
+        let strInput = ""
+        let index = 0
+        
+        async function creaEventosTeclado(){
+            addEvent(document, "keypress", function (e) {
+                e = e || window.event;
+                strInput += e.key
+                index +=1
+                if(index == 36){
+                    // idQRparaEditar = strInput
+                    // let a  = await actualizaSticker()
+                    // tenemosQR(strInput)
+                    
+                    index = 0
+                    strInput = ""
+                }else if(index > 36){
+                    index = 0
+                    strInput = ""
+                }
+            });
+
+            document.addEventListener('paste', (event) => {
+                event.preventDefault();
+                let paste = (event.clipboardData || window.clipboardData).getData('text');
+                index = paste.length
+                if(index == 36){
+                    let idQR = paste
+                    tenemosQR(paste)
+                    index = 0
+                }
+            });
+   
+        }
+
+        async function tenemosQR(idQR){
+            let datosUsuario
+                    try{ 
+                            let datos = await fetch(urlServer + "dameDatosUsuarioPorIdQR?idQR=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    verDetalle(datosUsuario, idQR)
+        }
+
+        function addEvent(element, eventName, callback) {
+            if (element.addEventListener) {
+                element.addEventListener(eventName, callback, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + eventName, callback);
+            } else {
+                element["on" + eventName] = callback;
+            }
+        }
+
+        function borraCookie(){
+            setCookie("idQR", "", 100)
+            alert("En cookie hay: " + getCookie("idQR"))
+        }
+        async function cargaResultados(){
+                // listaOdetalle(true);
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let idQR = urlParams.get('idQR') 
+                let estado = ""
+                let existeIdPrevio = getCookie("idQR")
+                //Existen 3 estados:
+                // No hay Cookie, osea PrimeraVez
+                // Si hay Cookie, y idQR es el mismo
+                // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
+                if (existeIdPrevio == ''){
+                    estado = estadosPagina.primeraVez
+                }else if (existeIdPrevio == idQR){
+                    estado = estadosPagina.tenemosCookieQRigual
+                }else{
+                    estado = estadosPagina.tenemosCookieQRdiferente
+                }
+                switch (estado) {
+                    case estadosPagina.primeraVez:
+                        setCookie("idQR", idQR, 100)
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRigual:
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRdiferente:
+                        guardamosRelacion(existeIdPrevio,idQR)
+                    break;
+                
+                    default:
+                    break;
+                }
+            }
+
+           async function vamosPorDatos(idQR){
+                    let datosUsuario
+                    try{ 
+                            let datos = await fetch(urlServer + "dameDatosPorIdQR?idQR=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario[0]
+                                    datosRelaciones = temp.Relaciones == undefined ? [] :  temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML = "<b>" + datosUsuario.nombreCompleto + "</b>"
+
+                    let listaContactos = document.createElement("ul")
+                    
+                    if(datosRelaciones.length == 0){
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = "No tenemos datos todavía"
+                        renglon.className = "naranja textoExplicacion"
+                        listaContactos.appendChild(renglon)
+                    }
+                    datosRelaciones.forEach(element => {
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = element.nombreCompleto
+                        renglon.className = "textoExplicacion"
+                        // renglon.onclick = verDetalle(element);
+                        renglon.addEventListener('click', verDetalleBind.bind(this,element, idQR))
+
+                        listaContactos.appendChild(renglon)
+                    });
+                    let padreLista = document.getElementById("lista")
+                    padreLista.innerHTML = ""
+                    padreLista.appendChild(listaContactos)
+            }
+
+            function verDetalleBind(element, idQR, event){
+                verDetalle(element, idQR)
+            }
+
+            async function guardamosRelacion(existeIdPrevio, idQR){
+                let datosUsuario
+                    let datosRelaciones
+                    try{ 
+                            let datos = await fetch(urlServer + "guardaRelacion?idQR1=" + existeIdPrevio + "&idQR2=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario
+                                    datosRelaciones = temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML =  "<b>" + datosUsuario.nombreCompleto + "<b>"
+
+                    verDetalle(datosRelaciones, getCookie("idQR"))
+            }
+
+         function verDetalle(element,idQR){
+                // listaOdetalle(false)
+                let detalle = document.getElementById("detalle")
+                detalle.innerHTML = ""
+
+                let foto = document.createElement("img")
+                let imagenFoto = element.profilePicture
+                if(imagenFoto == null){
+                    imagenFoto = "assets/img/profilePictureDefault.jpg"
+                }
+                foto.src = imagenFoto
+                foto.className = "profilePicture"
+                idQRparaEditar = idQR
+                foto.addEventListener('click', abreCamara.bind(this))
+                detalle.appendChild(foto);
+                
+                let listaContactos = document.createElement("ul")
+                let nombreCompleto = document.createElement("li");
+                nombreCompleto.innerHTML = element.nombreCompleto
+                nombreCompleto.className = "espaciadorDos textoExplicacion"
+                nombreCompleto.onclick = function(){
+                    let nuevo = window.prompt('Nombre completo: ', element.nombreCompleto);
+                    if(nuevo.length >0 ){
+                        element.nombreCompleto = nuevo
+                        actualizaDatos(element)
+                    }
+                    
+                }
+                listaContactos.appendChild(nombreCompleto)
+
+                let empresa = document.createElement("li");
+                empresa.innerHTML = element.nombreEmpresa
+                empresa.className = "espaciadorDos textoExplicacion"
+                empresa.onclick = function(){
+                    let nuevo = window.prompt('Nombre Empresa: ', element.nombreEmpresa);
+                    if(nuevo.length >0 ){
+                        element.nombreEmpresa = nuevo
+                        actualizaDatos(element)
+                    }
+                }
+                listaContactos.appendChild(empresa)
+
+                let telefono = document.createElement("li");
+                telefono.innerHTML = element.numeroCelular
+                telefono.className = "espaciadorDos textoExplicacion"
+                telefono.onclick = function(){
+                    let nuevo = window.prompt('Numero telefono: ', element.numeroCelular);
+                    if(nuevo.length >0 ){
+                        element.numeroCelular = nuevo
+                        actualizaDatos(element)
+                    }
+                }
+                listaContactos.appendChild(telefono)
+                
+                let correoElectronico = document.createElement("li");
+                correoElectronico.innerHTML = element.correoElectronico
+                correoElectronico.className = "espaciadorDos textoExplicacion"
+                correoElectronico.onclick = function(){
+                    let nuevo = window.prompt('Correo electrónico: ', element.correoElectronico);
+                    if(nuevo.length >0 ){
+                        element.correoElectronico = nuevo
+                        actualizaDatos(element)
+                    }
+                }
+                listaContactos.appendChild(correoElectronico)
+                
+
+                let cargoEmpresarial = document.createElement("li");
+                cargoEmpresarial.innerHTML = element.cargoEmpresarial
+                cargoEmpresarial.className = "espaciadorDos textoExplicacion"
+                cargoEmpresarial.onclick = function(){
+                    let nuevo = window.prompt('Cargo Empresarial: ', element.cargoEmpresarial);
+                    if(nuevo.length >0 ){
+                        element.cargoEmpresarial = nuevo
+                        actualizaDatos(element)
+                    }
+                }
+                listaContactos.appendChild(cargoEmpresarial)
+
+                detalle.appendChild(listaContactos);
+
+                let imprimir = document.createElement("button")
+                imprimir.innerHTML = "Imprimir"
+                imprimir.className = "boton"
+                imprimir.onclick = function(){
+                    actualizaSticker()
+                }
+                detalle.appendChild(imprimir)
+
+                // const a = document.createElement('a')
+                // a.href = urlImagen
+                // a.download = urlImagen.split('/').pop()
+                // // document.body.appendChild(a)
+                // // a.target="_blank"
+                // // a.click()
+                // // document.body.removeChild(a)
+                // const a = document.createElement("button")
+                // a.type = "submit"
+                // document.body.appendChild(a)
+                // a.onclick = async function(){
+                //     window.open (urlImagen)
+                // }
+                // a.click()
+                // document.body.removeChild(a)
+            }
+            
+            let urlImagen
+            async function actualizaSticker(){
+                    //Traer imagen compuesta        
+                    try{ 
+                            let datos = await fetch(urlServer + "dameStickerParaImprimir?idQR=" + idQRparaEditar) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                urlImagen = json.stickerUrl
+                                window.open(urlImagen)
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                }
+
+    async function actualizaDatos(element){           
+        const dataJson = JSON.stringify(element)
+
+        const settings = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: 
+                dataJson
+        };
+        try{
+            const fetchResponse = await fetch(`https://mosaico.app:4000/lenovo/editaUsuario`, settings);
+            const data = await fetchResponse.json();
+            console.log("Data" + JSON.stringify(data))
+                    
+            if(data.statusCode == 200){
+                alert(data.message);
+                tenemosQR(element.idQR)
+            }
+        } catch (e) {
+            console.log("Error" + e)
+            resul.statusCode = 404
+            resul.message = e
+            return resul;
+        }
+    }
+// -------------------------------------TOMA FOTO----------------------------------
+
+         let modoBoton = 'paso1'
+         let camaraAbierta = false;
+
+    async function abreCamara(){
+        if(!camaraAbierta){
+            document.getElementById("camaraFotos").className  = ""
+            camaraAbierta = true;
+            let constraints
+            if(window.location.hostname == "localhost"){
+                constraints= {
+                video: {
+                    width: {
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
+                    },
+                    height: {
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
+                    },
+                    facingMode: 'user'
+                    , video: true
+                    },
+                }
+            }else if(window.innerHeight > window.innerWidth){
+                constraints = {
+                video: {
+                    width: {
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
+                    },
+                    height: {
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
+                    },
+                    facingMode: 'user'
+                    , video: true
+                 },
+                }
+            }else{
+                constraints = {
+                video: {
+                    width: {
+                        min: 320,
+                        ideal: 480,
+                        max: 480,
+                    },
+                    height: {
+                        min: 480,
+                        ideal:  640,
+                        max: 640,
+                    },
+                    facingMode: 'user'
+                    , video: true
+                },
+            }
+        }
+        try{
+        if (!navigator.mediaDevices && !navigator.mediaDevices.getUserMedia) {
+             navigator.userMedia = navigator.mozGetUserMedia || navigator.getUserMedia
+            if (!navigator.userMedia) {
+                alert("Please Update or Use Different Browser");
+            return
+            }
+            navigator.userMedia(constraints, (stream) => showCam(stream), (err) => showErr(err))
+            return
+        }
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => showCam(stream))
+                .catch((err) => showErr(err))
+
+            }catch(error){
+                alert("Error mensaje: " + error);
+            }
+        }else{
+            tomaFoto()
+        }
+    }
+
+    function showCam(stream) {
+        let video = document.querySelector("#video");
+        video.setAttribute("playsinline", true);
+        video.srcObject = stream;
+        // video.height = video.scrollWidth * 1.33
+        let btn1 = document.getElementById("botonTomaFoto")
+        btn1.innerHTML = "TOMAR SELFIE"
+    }
+
+    function showErr(err) {
+        let message = err.name === "NotFoundError" ? "Please Attach Camera" :
+        err.name === "NotAllowedError" ? "Please Grant Permission to Access Camera" : err
+        alert(message)
+    }
+
+    async function tomaFoto(){
+        if(modoBoton == 'paso1'){
+            const canvas = document.querySelector('#canvas')
+            const video = document.querySelector('#video')
+            canvas.width = video.videoWidth
+            canvas.height = video.videoHeight
+            canvas.getContext('2d').drawImage(video, 0, 0)
+            canvas.className  ="camaraSelfie visible"
+            constraints= {
+                    video: {
+                        width: {
+                            min: 380,
+                            ideal: 400,
+                            max: 420,
+                        },
+                        height: {
+                            min: 380,
+                            ideal: 400,
+                            max: 420,
+                        },
+                        facingMode: 'user'
+                        },
+                    }
+                // const videoStream = await navigator.mediaDevices.getUserMedia(constraints)
+                // videoStream.getTracks().forEach((track) => {
+                //     track.stop()
+                // })
+                video.className = "camaraSelfie oculto"
+                let btn1 = document.getElementById("botonTomaFoto")
+                btn1.innerHTML = "REPETIR FOTO"
+                let btn2 = document.getElementById("botonBuscarGaleria")
+                btn2.innerHTML = "GUARDAR FOTO"
+                btn2.className = "boton botonChico2"
+                btn2.style.display = "block"
+                modoBoton = 'paso2'
+        }else{
+            const canvas = document.querySelector('#canvas')
+            const video = document.querySelector('#video')
+            canvas.className = "camaraSelfie oculto"
+            video.className = "camaraSelfie visible"
+            //cargaResultados()
+            modoBoton = 'paso1'
+            let btn2 = document.getElementById("botonBuscarGaleria")
+            btn2.style.display = "none"
+            let btn1 = document.getElementById("botonTomaFoto")
+            btn1.innerHTML = "TOMAR SELFIE"
+        }
+        
+    }
+
+    async function buscarGaleria(){
+        if(modoBoton == 'paso1'){
+            modoBoton = 'paso2'
+        }else{
+            modoBoton = 'paso1'
+            // console.log("Hacemos upLoad de foto y vamos a registro Exitoso ")
+            const canvas = document.querySelector('#canvas')
+            let img = await canvas.toBlob(function(blob){
+                //////////////
+                const formData = new FormData();
+                let resul = {
+                    error : true,
+                    message: "",
+                    statusCode: 0
+                }
+                formData.append('avatar', blob, 'avatar.jpg');
+
+                const options = {
+                    method: 'POST',
+                    body: formData
+                };
+                let idQR = idQRparaEditar
+                fetch(`https://mosaico.app:4000/lenovo/uploadProfilePicture?idQR=`+idQR, options).then(r => r.json()).then(data => {
+                        //Your logic, in my case I get JSON from server
+                        if(data.statusCode == 200){
+                                resul.error = false
+                                resul.statusCode = data.statusCode
+                                resul.message = data.message
+                                tenemosQR(idQRparaEditar)
+                                // await actualizaSticker()
+                                document.getElementById("camaraFotos").className  = "oculto"
+                         }else{                        
+                            resul.statusCode = data.statusCode
+                            resul.message = data.message
+                            }
+                });
+            },'image/jpeg', 0.95)            
+        }
+    }
+</script>
+</body>
+</html>
