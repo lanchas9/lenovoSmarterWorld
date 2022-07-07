@@ -8,7 +8,7 @@
             "name": "Launch welcome",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:5500/perfilUsuario.html?idQR=0a037ce3-f17e-5815-86ea-cc1f3e24c2da",
+            "url": "http://localhost:5500/editosDatosConQR.html?idQR=0a037ce3-f17e-5815-86ea-cc1f3e24c2da",
             "webRoot": "${workspaceFolder}/"
         }
     ]
