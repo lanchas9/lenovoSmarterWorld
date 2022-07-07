@@ -147,6 +147,9 @@ body{
 	margin-top: 20%;
 	height: 50px;
 	max-height: 50px;
+	display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .botonChico{
@@ -234,6 +237,10 @@ body{
   .logoDesktopRegistro{
 	display: none;
   }
+
+  ul{
+	padding: 0px;
+  }
 /* -----------------------IPAD------------------------------------- */
   @media (min-width: 800px){
   .logo{
@@ -270,6 +277,16 @@ body{
 	margin-bottom: 0%;
 	width: 40%;
 }
+
+/* .textoExplicacion2{
+	margin-left: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white;
+	margin-bottom: 0%;
+	width: 40%;
+} */
 
   .boton{
 	text-align: center;

@@ -110,11 +110,11 @@
                             if (json.statusCode = 200 ){ 
                                     let temp = json.message
                                     datosUsuario = temp
+                                    verDetalle(datosUsuario, idQR)
                             }
                     }catch(error){
                         console.log({error})
                     }
-                    verDetalle(datosUsuario, idQR)
         }
 
         function addEvent(element, eventName, callback) {
@@ -131,40 +131,40 @@
             setCookie("idQR", "", 100)
             alert("En cookie hay: " + getCookie("idQR"))
         }
-        async function cargaResultados(){
-                // listaOdetalle(true);
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                let idQR = urlParams.get('idQR') 
-                let estado = ""
-                let existeIdPrevio = getCookie("idQR")
-                //Existen 3 estados:
-                // No hay Cookie, osea PrimeraVez
-                // Si hay Cookie, y idQR es el mismo
-                // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
-                if (existeIdPrevio == ''){
-                    estado = estadosPagina.primeraVez
-                }else if (existeIdPrevio == idQR){
-                    estado = estadosPagina.tenemosCookieQRigual
-                }else{
-                    estado = estadosPagina.tenemosCookieQRdiferente
-                }
-                switch (estado) {
-                    case estadosPagina.primeraVez:
-                        setCookie("idQR", idQR, 100)
-                        vamosPorDatos(idQR)
-                    break;
-                    case estadosPagina.tenemosCookieQRigual:
-                        vamosPorDatos(idQR)
-                    break;
-                    case estadosPagina.tenemosCookieQRdiferente:
-                        guardamosRelacion(existeIdPrevio,idQR)
-                    break;
+        // async function cargaResultados(){
+        //         // listaOdetalle(true);
+        //         const queryString = window.location.search;
+        //         const urlParams = new URLSearchParams(queryString);
+        //         let idQR = urlParams.get('idQR') 
+        //         let estado = ""
+        //         let existeIdPrevio = getCookie("idQR")
+        //         //Existen 3 estados:
+        //         // No hay Cookie, osea PrimeraVez
+        //         // Si hay Cookie, y idQR es el mismo
+        //         // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
+        //         if (existeIdPrevio == ''){
+        //             estado = estadosPagina.primeraVez
+        //         }else if (existeIdPrevio == idQR){
+        //             estado = estadosPagina.tenemosCookieQRigual
+        //         }else{
+        //             estado = estadosPagina.tenemosCookieQRdiferente
+        //         }
+        //         switch (estado) {
+        //             case estadosPagina.primeraVez:
+        //                 setCookie("idQR", idQR, 100)
+        //                 vamosPorDatos(idQR)
+        //             break;
+        //             case estadosPagina.tenemosCookieQRigual:
+        //                 vamosPorDatos(idQR)
+        //             break;
+        //             case estadosPagina.tenemosCookieQRdiferente:
+        //                 guardamosRelacion(existeIdPrevio,idQR)
+        //             break;
                 
-                    default:
-                    break;
-                }
-            }
+        //             default:
+        //             break;
+        //         }
+        //     }
 
            async function vamosPorDatos(idQR){
                     let datosUsuario

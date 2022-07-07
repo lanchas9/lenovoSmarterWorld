@@ -119,7 +119,8 @@
                     datosRelaciones.forEach(element => {
                         let renglon = document.createElement("li")
                         renglon.innerHTML = element.nombreCompleto
-                        renglon.className = "textoExplicacion"
+                        // renglon.className = "textoExplicacion"
+                        renglon.className = "boton"
                         // renglon.onclick = verDetalle(element);
                         renglon.addEventListener('click', verDetalleBind.bind(this,element, idQR))
 
@@ -167,7 +168,7 @@
                 
                 let listaContactos = document.createElement("ul")
                 let nombreCompleto = document.createElement("li");
-                nombreCompleto.innerHTML = element.nombreCompleto
+                nombreCompleto.innerHTML = "<b>" + element.nombreCompleto + "</b>"
                 nombreCompleto.className = "espaciadorDos textoExplicacion"
                 listaContactos.appendChild(nombreCompleto)
 
@@ -193,7 +194,29 @@
                 cargoEmpresarial.innerHTML = element.cargoEmpresarial
                 cargoEmpresarial.className = "espaciadorDos textoExplicacion"
                 listaContactos.appendChild(cargoEmpresarial)
+                // detalle.appendChild(listaContactos);
 
+                let linkCel = document.createElement("a")
+                linkCel.href = "tel:" + element.numeroCelular
+
+                let imgCel = document.createElement("img")
+                imgCel.src = "./assets/img/cel.png"
+                linkCel.appendChild(imgCel)
+                
+                
+                let linkEmail = document.createElement("a")
+                linkEmail.href = "mailto:" + element.correoElectronico
+
+                let imgMail = document.createElement("img")
+                imgMail.src = "./assets/img/mail.png"
+                linkEmail.appendChild(imgMail)
+                
+                
+                let divIconos = document.createElement("div")
+                divIconos.className = "espaciadorDos textoExplicacion"
+                divIconos.appendChild(linkCel)
+                divIconos.appendChild(linkEmail)
+                listaContactos.appendChild(divIconos);
                 detalle.appendChild(listaContactos);
 
                 let regresar = document.createElement("button")
