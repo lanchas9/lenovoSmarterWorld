@@ -67,6 +67,10 @@
                 // No hay Cookie, osea PrimeraVez
                 // Si hay Cookie, y idQR es el mismo
                 // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
+                if (idQR==null && existeIdPrevio != null){
+                    idQR = existeIdPrevio
+                }
+
                 if (existeIdPrevio == ''){
                     estado = estadosPagina.primeraVez
                 }else if (existeIdPrevio == idQR){
