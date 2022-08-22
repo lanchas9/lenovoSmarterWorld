@@ -1,0 +1,538 @@
+html{
+	background: rgb(51,31,94);
+	background: linear-gradient(270deg, rgba(51,31,94,1) 0%, rgba(93,36,42,1) 50%, rgba(79,32,38,1) 100%);
+   
+}
+
+body{
+	height: 100%;
+    margin: 0;
+	 background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.logo{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 20%;
+	margin-bottom: 20%;
+}
+
+.logoInstrucciones{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+	margin-bottom: 20%;
+}
+
+.logoRegistro{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+	margin-bottom: 20%;
+}
+
+.final{
+	position: absolute;
+	top: 90%;
+	height: 10%;
+	width: 100%;
+	background: rgb(51,31,94);
+	background: linear-gradient(270deg, rgba(51,31,94,1) 0%, rgba(93,36,42,1) 50%, rgba(79,32,38,1) 100%);
+}
+
+.iconoLogo{
+	width: 20%;
+	margin-left: 10%;
+	margin-right: 0%;
+}
+
+.iconoLogos{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.iconoLogo2{
+	width: 20%;
+	margin-left: 10%;
+	margin-right: 0%;
+	padding-top: 0px;
+	margin-top: 0px;
+	border-top: 0px;
+}
+
+.camaraSelfie{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
+.oculto{
+	display: none;
+}
+
+.visible{
+	display: block;
+}
+
+.titulo{
+	font-weight: bolder;
+	text-align: center;
+	color: #FF6A50;
+}
+
+.texto{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: large;
+	font-weight: 600;
+	text-align: center;
+	color: white;
+	word-break: break-word;
+}
+
+.textoIzquierda{
+	text-align: left;
+}
+
+.textoExplicacion{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white;
+	margin-bottom: 0%;
+}
+
+.textoExplicacion2{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: large;
+	font-weight: 400;
+	text-align: center;
+	color: white;
+	margin-bottom: 0%;
+}
+
+.textoExplicacion3Izq{
+	margin-left: 15%;
+	margin-right: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white	;
+	margin-bottom: 0%;
+}
+
+.boton{
+	background-color: #FF6A50;
+	color: white;
+	font-size: larger;
+	font-weight: 600;
+	text-align: center;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 3%;
+	border-color: transparent;
+	/* box-shadow: 1px 1px 1px 1px #888888; */
+	margin-bottom: 20%;
+	display: block;
+	margin-top: 20%;
+	height: 50px;
+	max-height: 50px;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botonChico{
+	font-size: large;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}
+
+.botonChico2{
+	font-size: small;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}
+/* .elmentoFormulario{
+	text-align: left;
+} */
+
+.elmentoFormularioTitulo{
+	margin-left: 15%;
+	/* margin-right: 10%; */
+	font-size: medium;
+	font-weight: 500;
+	/* text-align: center; */
+	color: white;
+	margin-bottom: 0px;
+}
+
+.elmentoFormularioinput{
+	-webkit-appearance: none;
+	font-size: medium;
+	/* font-size: max(16px, 1em); */
+	font-family: inherit;
+	padding: 0.25em 0.5em;
+	/* background-color: rgb(168, 70, 70); */
+	
+	border: 1px solid var(--input-border);
+	border-radius: 4px;
+	border-color: #FF6A50;
+	color: white;
+	margin-left: 15%;
+	width: 70%;
+	background: transparent;
+	box-shadow:inset 0 0 1px 1px #FF6A50
+  	/* background: #fff; */
+  }
+
+  .espaciador{
+	margin-top: 10%;  
+	margin-bottom: 10%;
+  }
+
+  .espaciador2{
+	margin-top: 10%;  
+	margin-bottom: 10%;
+  }
+
+  .espaciador{
+	font-size: medium;
+	margin-top: 10%;  
+	margin-bottom: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
+  }
+
+  .qr{
+	  width: 40%;
+	  margin-left: 30%;
+	  margin-right: 30%;
+	  margin-top: 5%;
+	  margin-bottom: 0%;
+  }
+
+  li{
+	list-style-type:none
+  }
+
+  .naranja{
+	color: #FF6A50;
+  }
+
+  .logoDesktop{
+	display: none;
+  }
+
+  .logoDesktopRegistro{
+	display: none;
+  }
+
+  ul{
+	padding: 0px;
+  }
+/* -----------------------IPAD------------------------------------- */
+  @media (min-width: 800px){
+  .logo{
+	width: 40%;
+	margin-top: 20%;
+	margin-bottom: 5%;
+  }
+
+  .logoInstrucciones{
+	width: 40%;
+	margin-top: 20%;
+	margin-bottom: 2%;
+  }
+
+  .logoRegistro{
+	width: 40%;
+	margin-top: 10%;
+	margin-bottom: 2%;
+  }
+
+  .texto{
+	margin-left: 10%;
+	text-align: left;
+	width: 40%;
+  }
+
+  
+.textoExplicacion{
+	margin-left: 10%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white;
+	margin-bottom: 0%;
+	width: 40%;
+}
+
+/* .textoExplicacion2{
+	margin-left: 15%;
+	font-size: medium;
+	font-weight: 400;
+	text-align: left;
+	color: white;
+	margin-bottom: 0%;
+	width: 40%;
+} */
+
+  .boton{
+	text-align: center;
+	width: 25%;
+	margin-left: 10%;
+	border-radius: 3%;
+	border-color: transparent;
+	margin-bottom: 20%;
+	display: block;
+	margin-top: 10%;
+	margin-bottom: 10%;
+  }
+
+  .botonChico{
+	font-size: large;
+	margin-top: 3%;
+	margin-bottom: 2%;
+}
+
+.botonChico2{
+	font-size: small;
+	margin-top: 0%;
+	margin-bottom: 1%;
+}	
+
+.espaciador{
+	margin-top: 4%;  
+	margin-bottom: 4%;
+  }
+
+  .espaciador2{
+	  margin-top: 2%;  
+	  margin-bottom: 2%;
+	  margin-left: 10%;
+	}
+
+  .iconoLogos{
+	width: 40%;
+	margin-left: 0%;
+  }
+  
+  .logoDesktop{
+	display:block;
+	position: fixed;
+	left: 60%;
+	top: 30%;
+	width: 35%;
+  }
+
+  .logoDesktopRegistro
+  {
+	display:block;
+	position: fixed;
+	left: 60%;
+	top: 30%;
+	width: 35%;
+  }
+
+  .titulo{
+	font-weight: bolder;
+	text-align: left;
+	margin-left: 10%;
+	color: #FF6A50;
+	width: 40%;
+}
+
+.elmentoFormularioTitulo{
+	margin-left: 10%;
+	font-size: medium;
+	font-weight: 500;
+	color: white;
+	margin-bottom: 0px;
+}
+
+.elmentoFormularioinput{
+	font-size: medium;
+	font-family: inherit;
+	padding: 0.25em 0.5em;
+	border: 1px solid var(--input-border);
+	border-radius: 4px;
+	border-color: #FF6A50;
+	color: white;
+	margin-left: 10%;
+	width: 40%;
+	background: transparent;
+	box-shadow:inset 0 0 1px 1px #FF6A50
+  }
+
+  .camaraSelfie{
+	width: 35%;
+	margin-left: 10%;
+	margin-top: 0%;
+	margin-bottom: 2%;
+}
+
+.textoExplicacion3Izq{
+	margin-left: 10%;
+	width: 42%;
+	font-size: large;
+	font-weight: 400;
+	text-align: left;
+	color: white	;
+	margin-bottom: 0%;
+}
+
+.qr{
+	width: 25%;
+	margin-left: 10%;
+	margin-top: 3%;
+	margin-bottom: 0%;
+}
+.naranja{
+	color: #FF6A50;
+  }
+
+}
+/* -----------------------DESKTOP------------------------------------- */
+@media (min-width: 1200px){
+	.logo{
+	  width: 40%;
+	  margin-top: 5%;
+	  margin-bottom: 5%;
+	}
+	
+	.logoInstrucciones{
+		width: 40%;
+		margin-top: 5%;
+		margin-bottom: 2%;
+	  }
+
+	  .logoRegistro{
+		width: 40%;
+		margin-top: 3%;
+		margin-bottom: 1%;
+	  }
+  
+	.texto{
+	  margin-left: 10%;
+	  text-align: left;
+	  width: 40%;
+	  font-size: larger;
+	}
+  
+	.boton{
+	  text-align: center;
+	  width: 25%;
+	  margin-left: 10%;
+	  border-radius: 3%;
+	  border-color: transparent;
+	  margin-bottom: 20%;
+	  display: block;
+	  margin-top: 10%;
+	  margin-bottom: 5%;
+	}
+
+	.botonChico{
+		font-size: large;
+		margin-top: 3%;
+		margin-bottom: 2%;
+	}
+  
+	.iconoLogos{
+	  width: 40%;
+	  margin-left: 10%;
+	}
+	
+	.logoDesktop{
+	  display:block;
+	  position: fixed;
+	  left: 60%;
+	  top: 12%;
+	  width: 35%;
+	}
+
+	.titulo{
+		font-weight: bolder;
+		font-size: x-large;
+		text-align: left;
+		margin-left: 10%;
+		margin-top: 0%;
+		color: #FF6A50;
+		width: 40%;
+	}
+
+	.textoExplicacion{
+		margin-left: 10%;
+		font-size: xx-large;
+		font-weight: 400;
+		text-align: left;
+		color: white;
+		margin-bottom: 0%;
+		width: 40%;
+	}
+
+	.espaciador{
+		margin-top: 2%;  
+		margin-bottom: 2%;
+		margin-left: 10%;
+	  }
+	  
+.elmentoFormularioTitulo{
+	font-size: x-large;
+	}
+
+.elmentoFormularioinput{
+	font-size: x-large;
+  }
+
+  .botonChico{
+	font-size: large;
+	margin-top: 3%;
+	margin-bottom: 2%;
+}
+
+.botonChico2{
+	font-size: x-large;
+	margin-top: 0%;
+	margin-bottom: 1%;
+}
+
+.logoDesktopRegistro{
+  display:block;
+  position: fixed;
+  left: 60%;
+  top: 20%;
+  width: 35%;
+}
+
+.camaraSelfie{
+	width: 30%;
+	margin-left: 10%;
+	margin-top: 0%;
+	margin-bottom: 2%;
+}
+
+.textoExplicacion3Izq{
+	margin-left: 10%;
+	width: 42%;
+	font-size: larger;
+	font-weight: 400;
+	text-align: left;
+	color: white	;
+	margin-bottom: 0%;
+}
+.naranja{
+	color: #FF6A50;
+  }
+  
+  }

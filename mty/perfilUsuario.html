@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styleInicio.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/perfil.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon//apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon//apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon//apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon//apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon//apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon//apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon//apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/favicon//android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon//favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon//favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon//manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon//ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>LENOVO SMARTER WORLD 2022</title>
+    <script src="/assets/js/cookie.js"></script>
+</head>
+<body onload="cargaResultados()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo" onclick="borraCookie()">
+    <!-- <p class="titulo" onclick="borraCookie()">LENOVO SMARTER WORLD 2022</p> -->
+    <p class="textoExplicacion3Izq">Bienvenid@ <i id="bienvenida">USUARIO</i> este es tu directorio digital de Smart Cards</p>
+    <div class="espaciador"><br></div>
+    <div id="lista"></div>
+    <div id="detalle"></div>
+    <div class="espaciador"><br></div>
+    <div class="espaciador">
+        <img src="assets/img/logos.png" alt="" class="iconoLogos">
+        <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
+        <img src="assets/img/windows11.png" alt="" class="iconoLogo">
+        <img src="assets/img/intel.png" alt="" class="iconoLogo"> -->
+    </div>
+    <script>
+        let urlServer = "https://mosaico.app:4000/lenovo/"
+        let idQR = ''
+        let estadosPagina = { 
+            primeraVez: "primeraVez",
+            tenemosCookieQRigual: "tenemosCookieQRigual",
+            tenemosCookieQRdiferente: "tenemosCookieQRdiferente",
+        }
+        let datosRelaciones
+        
+        function borraCookie(){
+            setCookie("idQR", "", 100)
+            alert("En cookie hay: " + getCookie("idQR"))
+        }
+        async function cargaResultados(){
+                listaOdetalle(true);
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let idQR = urlParams.get('idQR') 
+                let estado = ""
+                let existeIdPrevio = getCookie("idQR")
+                //Existen 3 estados:
+                // No hay Cookie, osea PrimeraVez
+                // Si hay Cookie, y idQR es el mismo
+                // Si hay Cookie, y idQR es difente, hay que hacer la relación en BD
+                if (idQR==null && existeIdPrevio != null){
+                    idQR = existeIdPrevio
+                }
+
+                if (existeIdPrevio == ''){
+                    estado = estadosPagina.primeraVez
+                }else if (existeIdPrevio == idQR){
+                    estado = estadosPagina.tenemosCookieQRigual
+                }else{
+                    estado = estadosPagina.tenemosCookieQRdiferente
+                }
+                switch (estado) {
+                    case estadosPagina.primeraVez:
+                        setCookie("idQR", idQR, 100)
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRigual:
+                        vamosPorDatos(idQR)
+                    break;
+                    case estadosPagina.tenemosCookieQRdiferente:
+                        guardamosRelacion(existeIdPrevio,idQR)
+                    break;
+                
+                    default:
+                    break;
+                }
+            }
+
+           async function vamosPorDatos(idQR){
+                    let datosUsuario
+                    try{ 
+                            let datos = await fetch(urlServer + "dameDatosPorIdQR?idQR=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario[0]
+                                    datosRelaciones = temp.Relaciones == undefined ? [] :  temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML = "<b>" + datosUsuario.nombreCompleto + "</b>"
+
+                    let listaContactos = document.createElement("ul")
+                    
+                    if(datosRelaciones.length == 0){
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = "No tenemos datos todavía"
+                        renglon.className = "naranja textoExplicacion"
+                        listaContactos.appendChild(renglon)
+                    }
+                    datosRelaciones.forEach(element => {
+                        let renglon = document.createElement("li")
+                        renglon.innerHTML = element.nombreCompleto
+                        // renglon.className = "textoExplicacion"
+                        renglon.className = "boton"
+                        // renglon.onclick = verDetalle(element);
+                        renglon.addEventListener('click', verDetalleBind.bind(this,element, idQR))
+
+                        listaContactos.appendChild(renglon)
+                    });
+                    let padreLista = document.getElementById("lista")
+                    padreLista.innerHTML = ""
+                    padreLista.appendChild(listaContactos)
+            }
+
+            function verDetalleBind(element, idQR, event){
+                verDetalle(element, idQR)
+            }
+
+            async function guardamosRelacion(existeIdPrevio, idQR){
+                let datosUsuario
+                    let datosRelaciones
+                    try{ 
+                            let datos = await fetch(urlServer + "guardaRelacion?idQR1=" + existeIdPrevio + "&idQR2=" + idQR) 
+                            let json = await datos.json()
+
+                            if (json.statusCode = 200 ){ 
+                                    let temp = json.message
+                                    datosUsuario = temp.Usuario
+                                    datosRelaciones = temp.Relaciones
+                            }
+                    }catch(error){
+                        console.log({error})
+                    }
+                    let bienvenida = document.getElementById("bienvenida")
+                    bienvenida.innerHTML =  "<b>" + datosUsuario.nombreCompleto + "<b>"
+
+                    verDetalle(datosRelaciones, getCookie("idQR"))
+            }
+
+            function verDetalle(element,idQR){
+                listaOdetalle(false)
+                let detalle = document.getElementById("detalle")
+                detalle.innerHTML = ""
+
+                let foto = document.createElement("img")
+                foto.src = element.profilePicture
+                foto.className = "profilePicture"
+                detalle.appendChild(foto);
+                
+                let listaContactos = document.createElement("ul")
+                let nombreCompleto = document.createElement("li");
+                nombreCompleto.innerHTML = "<b>" + element.nombreCompleto + "</b>"
+                nombreCompleto.className = "espaciadorDos textoExplicacion"
+                listaContactos.appendChild(nombreCompleto)
+
+                let empresa = document.createElement("li");
+                empresa.innerHTML = element.nombreEmpresa
+                empresa.className = "espaciadorDos textoExplicacion"
+                
+                listaContactos.appendChild(empresa)
+
+                let telefono = document.createElement("li");
+                telefono.innerHTML = element.numeroCelular
+                telefono.className = "espaciadorDos textoExplicacion"
+                
+                listaContactos.appendChild(telefono)
+                
+                let correoElectronico = document.createElement("li");
+                correoElectronico.innerHTML = element.correoElectronico
+                correoElectronico.className = "espaciadorDos textoExplicacion"
+                listaContactos.appendChild(correoElectronico)
+                
+
+                let cargoEmpresarial = document.createElement("li");
+                cargoEmpresarial.innerHTML = element.cargoEmpresarial
+                cargoEmpresarial.className = "espaciadorDos textoExplicacion"
+                listaContactos.appendChild(cargoEmpresarial)
+                // detalle.appendChild(listaContactos);
+
+                let linkCel = document.createElement("a")
+                linkCel.href = "tel:" + element.numeroCelular
+
+                let imgCel = document.createElement("img")
+                imgCel.src = "./assets/img/cel.png"
+                linkCel.appendChild(imgCel)
+                
+                
+                let linkEmail = document.createElement("a")
+                linkEmail.href = "mailto:" + element.correoElectronico
+
+                let imgMail = document.createElement("img")
+                imgMail.src = "./assets/img/mail.png"
+                linkEmail.appendChild(imgMail)
+                
+                
+                let divIconos = document.createElement("div")
+                divIconos.className = "espaciadorDos textoExplicacion"
+                divIconos.appendChild(linkCel)
+                divIconos.appendChild(linkEmail)
+                listaContactos.appendChild(divIconos);
+                detalle.appendChild(listaContactos);
+
+                let regresar = document.createElement("button")
+                regresar.innerHTML = "Regresar"
+                regresar.className = "boton"
+                regresar.onclick = function(){
+                    listaOdetalle(true)
+                    vamosPorDatos(idQR)
+                }
+                detalle.appendChild(regresar)
+            }
+
+            function listaOdetalle(val){
+                let lista = document.getElementById("lista")
+                let detalle = document.getElementById("detalle")
+                if (val){
+                    lista.style.display = "block";
+                    detalle.style.display = "none";    
+                }else{
+                    lista.style.display = "none";
+                    detalle.style.display = "block";   
+                }
+            }
+</script>
+</body>
+</html>

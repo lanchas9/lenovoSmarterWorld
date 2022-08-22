@@ -26,39 +26,23 @@
     <meta name="theme-color" content="#ffffff">
     <title>LENOVO SMARTER WORLD 2022</title>
 </head>
-<body onload="cargaResultados()">
-    <img src="/assets/img/logo.png" alt="" srcset="" class="logoInstrucciones espaciador">
-    <img src="/assets/img/Imagen_desktop.png" alt="" srcset="" class="logoDesktopRegistro">
-    <p class="textoExplicacion3Izq">Tu Registro ha sido exitoso, y tu Smart Card ha sido generada. Recibirás un correo electrónico de confirmación (en caso de no visualizarlo te sugerimos checar tu SPAM y buzón de correo no deseado).</p>
-    <p class="textoExplicacion3Izq">Te recomendamos sacar un screenshot de tu QR, esto facilitará la entrega de tu Smart Card física en el evento.</p>
-    <p class="textoExplicacion3Izq">Te esperamos el <b class="naranja">7 de Julio 2022</b>  a las <b class="naranja">6:00 pm</b> en Reforma 180 - Torre Punta Reforma. Piso 35 <br><i>*Entrada por Mezzanine.</i></p>
-    <img src="" alt="" srcset="" id="qr" class="qr">
-    <button class="boton botonChico2" onclick="vamosMicrositio()">ACTIVAR MI SMART CARD</button>
+<body onload="pieDePagina()">
+    <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
+    <img src="/assets/img/Imagen_desktop.png" alt="" srcset="" class="logoDesktop">
+    <!-- <p class="titulo">LENOVO SMARTER WORLD 2022</p> -->
+    <p class="texto">Bienvenido a la experiencia inteligente de Soluciones Tecnológicas</p>
+    <button class="boton" onclick="window.location.href = 'instrucciones.html';">INICIAR</button>
     <div class="espaciador">
         <img src="assets/img/logos.png" alt="" class="iconoLogos">
         <!-- <img src="assets/img/lenovo.png" alt="" class="iconoLogo">
         <img src="assets/img/windows11.png" alt="" class="iconoLogo">
         <img src="assets/img/intel.png" alt="" class="iconoLogo"> -->
     </div>
-<script>
-    let idQr = ""
-    async function cargaResultados(){
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                if(urlParams.get('idQr') == null){
-                    idQR = urlParams.get('idQR')
-                }else{
-                    idQR = urlParams.get('idQr')
-                }
-                let urlImagenQR = 'https://mosaico.app:4000/' + 'file?path=qrcodes/' + idQR + ".png"
-                let imagen = document.getElementById("qr")
-                imagen.src = urlImagenQR
+    <!-- <div class="final"><br></div> -->
+    <script>
+    function pieDePagina(){
     }
 
-    function vamosMicrositio(){
-        window.location.href = 'perfilUsuario.html?idQR=' + idQR;
-    }
-
-</script>
+    </script>
 </body>
 </html>
