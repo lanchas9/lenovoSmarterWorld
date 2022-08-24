@@ -176,7 +176,7 @@
    async function verDetalleBind(element){
         let datosRegistros
         try{ 
-                let datos = await fetch(urlServer + "dameRegistrosPorDia?diaEspecifico=" + element.fechaRegistro) 
+                let datos = await fetch(urlServer + "MTYdameRegistrosPorDia?diaEspecifico=" + element.fechaRegistro) 
                 let json = await datos. json()
 
                 if (json.statusCode = 200 ){ 
