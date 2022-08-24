@@ -145,8 +145,8 @@ body{
 	margin-bottom: 20%;
 	display: block;
 	margin-top: 20%;
-	height: 50px;
-	max-height: 50px;
+	/* height: 50px;
+	max-height: 50px; */
 	display: flex;
   justify-content: center;
   align-items: center;
