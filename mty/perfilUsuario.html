@@ -53,8 +53,8 @@
         let datosRelaciones
         
         function borraCookie(){
-            setCookie("idQR", "", 100)
-            alert("En cookie hay: " + getCookie("idQR"))
+            setCookie("idQR_MTY", "", 100)
+            alert("En cookie hay: " + getCookie("idQR_MTY"))
         }
         async function cargaResultados(){
                 listaOdetalle(true);
@@ -62,7 +62,7 @@
                 const urlParams = new URLSearchParams(queryString);
                 let idQR = urlParams.get('idQR') 
                 let estado = ""
-                let existeIdPrevio = getCookie("idQR")
+                let existeIdPrevio = getCookie("idQR_MTY")
                 //Existen 3 estados:
                 // No hay Cookie, osea PrimeraVez
                 // Si hay Cookie, y idQR es el mismo
@@ -80,7 +80,7 @@
                 }
                 switch (estado) {
                     case estadosPagina.primeraVez:
-                        setCookie("idQR", idQR, 100)
+                        setCookie("idQR_MTY", idQR, 100)
                         vamosPorDatos(idQR)
                     break;
                     case estadosPagina.tenemosCookieQRigual:
@@ -98,7 +98,7 @@
            async function vamosPorDatos(idQR){
                     let datosUsuario
                     try{ 
-                            let datos = await fetch(urlServer + "dameDatosPorIdQR?idQR=" + idQR) 
+                            let datos = await fetch(urlServer + "MTYdameDatosPorIdQR?idQR=" + idQR) 
                             let json = await datos.json()
 
                             if (json.statusCode = 200 ){ 
@@ -157,7 +157,7 @@
                     let bienvenida = document.getElementById("bienvenida")
                     bienvenida.innerHTML =  "<b>" + datosUsuario.nombreCompleto + "<b>"
 
-                    verDetalle(datosRelaciones, getCookie("idQR"))
+                    verDetalle(datosRelaciones, getCookie("idQR_MTY"))
             }
 
             function verDetalle(element,idQR){

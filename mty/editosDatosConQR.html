@@ -104,7 +104,7 @@
         async function tenemosQR(idQR){
             let datosUsuario
                     try{ 
-                            let datos = await fetch(urlServer + "dameDatosUsuarioPorIdQR?idQR=" + idQR) 
+                            let datos = await fetch(urlServer + "MTYdameDatosUsuarioPorIdQR?idQR=" + idQR) 
                             let json = await datos.json()
 
                             if (json.statusCode = 200 ){ 
