@@ -28,7 +28,7 @@
 </head>
 <body onload="llenaDatos()">
     <img src="/assets/img/logo.png" alt="" srcset="" class="logo">
-    <p class="texto">Reporte Registros Portal</p>
+    <p id="contador" class="texto">Reporte Portal: Registros Totales = </p>
     <div class="espaciador"></div>
     <div id="lista"></div>
     <div class="espaciador">
@@ -56,7 +56,9 @@
                     }
 
         let listaContactos = document.createElement("ul")
+        let contador = 0
         datosRegistros.forEach(element => {
+            contador = contador + element.numRegistros
             let renglon = document.createElement("li")
             let str = element.numRegistros == 1 ? " invitado registrado" : " invitados registrados"    
             let fechaTexto = ""
@@ -167,7 +169,7 @@
             renglon.addEventListener('click', verDetalleBind.bind(this,element))
             listaContactos.appendChild(renglon)
         });
-
+        let totalRegistros = document.getElementById("contador").innerHTML = "Reporte Portal: Registros Totales = " + contador + " personas" 
         let padreLista = document.getElementById("lista")
         padreLista.innerHTML = ""
         padreLista.appendChild(listaContactos)
