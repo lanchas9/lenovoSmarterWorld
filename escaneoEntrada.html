@@ -33,6 +33,10 @@
                 console.log("**Leemos teclado**")
                 console.log({strInput})
                 console.log({index})
+                let key = e.key
+                console.log({key})
+                let keyCode = e.keyCode
+                console.log({keyCode})
                 // strInput += e.key
                 // index +=1
                 let largoCodigoQR = 99
@@ -41,7 +45,13 @@
                 }
                 let excedeLargoCodigoQR = largoCodigoQR + 1
                 if(index < largoCodigoQR){
-                    strInput += e.key
+                    if(e.keyCode == 34){
+                        console.log("alto")
+                        strInput += "@"
+                    }else{
+                        strInput += e.key
+                    }
+                    
                     index +=1
                 }else if(index == largoCodigoQR){
                     console.log("**Entramos con: **")
