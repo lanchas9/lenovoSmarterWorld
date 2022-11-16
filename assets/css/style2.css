@@ -34,6 +34,19 @@ body{
     padding-bottom: 10px;
     border-radius: 10px;
     text-align: center;
+    font-size: 60px;
+}
+
+.titulo3{
+    width: 60%;
+    background-color: #000000;
+    color: white;
+    /* height: 40px; */
+    margin-left: 20%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    text-align: center;
     font-size: xx-large;
 }
 
